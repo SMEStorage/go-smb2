@@ -295,7 +295,16 @@ func (fs *Share) OpenFile(name string, flag int, perm os.FileMode) (*File, error
 		access |= FILE_APPEND_DATA
 	}
 
-	sharemode := uint32(FILE_SHARE_READ | FILE_SHARE_WRITE)
+	var sharemode uint32
+	switch access {
+	case GENERIC_READ:
+		sharemode = FILE_SHARE_READ
+	case GENERIC_WRITE:
+		sharemode = FILE_SHARE_WRITE
+	default:
+		sharemode = FILE_SHARE_DELETE
+	}
+	sharemode = uint32(FILE_SHARE_READ | FILE_SHARE_WRITE)
 
 	var createmode uint32
 	switch {
