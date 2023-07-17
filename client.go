@@ -304,8 +304,6 @@ func (fs *Share) OpenFile(name string, flag int, perm os.FileMode) (*File, error
 	default:
 		sharemode = FILE_SHARE_DELETE
 	}
-	sharemode = uint32(FILE_SHARE_READ | FILE_SHARE_WRITE)
-
 	var createmode uint32
 	switch {
 	case flag&(os.O_CREATE|os.O_EXCL) == (os.O_CREATE | os.O_EXCL):
